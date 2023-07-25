@@ -40,7 +40,8 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                         <Card.Header
                             css={{
                                 display: 'flex',
-                                justifyContent: 'space-between'
+                                justifyContent: 'space-between',
+                                flexWrap: 'wrap'
                             }}>
                             <Text h1 transform='capitalize'>
                                 {pokemon.name}
@@ -51,13 +52,17 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                                     gap: '10px',
                                     flexWrap: 'wrap'
                                 }}>
-                                <Button color={'gradient'} ghost>
+                                <Button
+                                    color={'gradient'}
+                                    ghost
+                                    css={{ width: '100%' }}>
                                     Save to favorites
                                 </Button>
                                 <Button
                                     color='gradient'
                                     ghost
-                                    onClick={onClick}>
+                                    onClick={onClick}
+                                    css={{ width: '100%' }}>
                                     Return
                                 </Button>
                             </div>
