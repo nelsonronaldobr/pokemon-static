@@ -6,18 +6,19 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <NextNProgress
-                color=''
+                color={''}
                 options={{
                     showSpinner: false
                 }}
+                showOnShallow={false}
+                height={4}
                 transformCSS={(defaultCSS) => {
                     const customCSS = `
-                      /* Agrega tus estilos personalizados aquí */
-                      .bar {
-                        background: linear-gradient(112deg, #06b7db -63.59%, #0072f5 70.46%, #ff4ecd -20.3%);
-                      }
+                        .bar {
+                            background: rgb(255,26,103);
+                            background: linear-gradient(135deg, rgba(255,26,103,1) 0%, rgba(98,108,251,1) 44%, rgba(255,26,103,1) 88%);
+                        }
                     `;
-
                     return <style>{defaultCSS + customCSS}</style>;
                 }}
             />

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Layout } from '../../components/layouts';
 import { pokeApi } from '../../api';
@@ -22,8 +22,9 @@ const ButtonsContainer = styled.div`
 `;
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
-    const [isInFavorites, setisInFavorites] = useState(
-        localFavorites.existInFavorite({ id: pokemon.id })
+    const [isInFavorites, setIsInFavorites] = useState(
+        typeof window === 'undefined' &&
+            localFavorites.existInFavorite({ id: pokemon.id })
     );
 
     const router = useRouter();
@@ -34,7 +35,12 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
     const onToggleFavorite = () => {
         localFavorites.toggleFavorite({ id: pokemon.id });
+        setIsInFavorites(!isInFavorites);
     };
+
+    useEffect(() => {
+        setIsInFavorites(localFavorites.existInFavorite({ id: pokemon.id }));
+    }, [pokemon.id]);
 
     return (
         <Layout title={`Pokémon - ${pokemon.name}`}>
@@ -69,8 +75,10 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                                 <Button
                                     onPress={onToggleFavorite}
                                     color={'gradient'}
-                                    ghost>
-                                    Save to favorites
+                                    ghost={!isInFavorites}>
+                                    {isInFavorites
+                                        ? 'In favorites'
+                                        : 'Save to favorites'}
                                 </Button>
                                 <Button
                                     color='gradient'
