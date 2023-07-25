@@ -13,7 +13,7 @@ const index = () => {
                 }}>
                 <Text h1>coming soon</Text>
                 <Spacer />
-                <Loading size='xl' type='spinner' />
+                <Loading size='xl' type='spinner' color={'error'} />
             </Container>
         </Layout>
     );

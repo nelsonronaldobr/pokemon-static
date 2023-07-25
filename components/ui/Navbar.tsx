@@ -54,7 +54,7 @@ export const Navbar = () => {
                     }}>
                     <Image
                         src={
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png'
+                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png'
                         }
                         alt='Pokémon default'
                         width={70}
@@ -67,6 +67,9 @@ export const Navbar = () => {
                         </Text>
                         <Text color='white' h3>
                             okémon
+                        </Text>
+                        <Text color='white' h2>
+                            !
                         </Text>
                     </Link>
 
