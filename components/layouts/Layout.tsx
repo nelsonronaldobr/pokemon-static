@@ -16,7 +16,7 @@ export const Layout: FC<Props> = ({ children, title }) => {
                 <meta name='author' content='Nelson Barrera' />
                 <meta
                     name='description'
-                    content='Inforamcion sobre los Pokémones'
+                    content='Información sobre los Pokémones'
                 />
                 <meta name='keywords' content='pokedex, pokemon' />
             </Head>
