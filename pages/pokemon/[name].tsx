@@ -1,20 +1,39 @@
+import { useState } from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Layout } from '../../components/layouts';
 import { pokeApi } from '../../api';
 import { Pokemon, PokemonListResponse } from '../../interfaces';
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import NextLink from 'next/link';
+import { localFavorites } from '../../utils';
+import styled from 'styled-components';
 
 interface Props {
     pokemon: Pokemon;
 }
 
+const ButtonsContainer = styled.div`
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+    flex: 1;
+`;
+
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
+    const [isInFavorites, setisInFavorites] = useState(
+        localFavorites.existInFavorite({ id: pokemon.id })
+    );
+
     const router = useRouter();
 
     const onClick = () => {
         router.push('/');
+    };
+
+    const onToggleFavorite = () => {
+        localFavorites.toggleFavorite({ id: pokemon.id });
     };
 
     return (
@@ -46,26 +65,20 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                             <Text h1 transform='capitalize'>
                                 {pokemon.name}
                             </Text>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    gap: '10px',
-                                    flexWrap: 'wrap'
-                                }}>
+                            <ButtonsContainer>
                                 <Button
+                                    onPress={onToggleFavorite}
                                     color={'gradient'}
-                                    ghost
-                                    css={{ width: '100%' }}>
+                                    ghost>
                                     Save to favorites
                                 </Button>
                                 <Button
                                     color='gradient'
                                     ghost
-                                    onClick={onClick}
-                                    css={{ width: '100%' }}>
+                                    onPress={onClick}>
                                     Return
                                 </Button>
-                            </div>
+                            </ButtonsContainer>
                         </Card.Header>
                         <Card.Body>
                             <Text size={30}>Sprites:</Text>
