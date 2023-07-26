@@ -52,23 +52,30 @@ export const Navbar = () => {
                         alignItems: 'center',
                         justifyContent: 'start'
                     }}>
-                    <Image
-                        src={
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png'
-                        }
-                        alt='Pokémon default'
-                        width={70}
-                        height={70}
-                    />
-
                     <Link href='/' as={NextLink}>
-                        <Text color='white' h2>
-                            P
-                        </Text>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                gap: '8px',
+                                alignItems: 'center'
+                            }}>
+                            <Image
+                                src={
+                                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/92.svg'
+                                }
+                                alt='Pokémon default'
+                                width={40}
+                                height={40}
+                            />
+                            <Text color='white' h2>
+                                P
+                            </Text>
+                        </div>
                         <Text color='white' h3>
                             okémon
                         </Text>
-                        <Text color='white' h2>
+                        <Text color='white' h3>
                             !
                         </Text>
                     </Link>

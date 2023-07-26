@@ -1,22 +1,25 @@
-import { Container, Loading, Spacer, Text } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 import { Layout } from '../../components/layouts';
+import { FavoritePokemons, NoFavorites } from '../../components/ui';
+import { localFavorites } from '../../utils';
+import { Card, Grid } from '@nextui-org/react';
 
-const index = () => {
+const FavoritesApp = () => {
+    const [favoritePokemons, setFavoritePokemons] = useState<number[]>([]);
+
+    useEffect(() => {
+        setFavoritePokemons(localFavorites.pokemons());
+    }, []);
+
     return (
-        <Layout>
-            <Container
-                display='flex'
-                justify='center'
-                alignItems='center'
-                css={{
-                    height: '60vh'
-                }}>
-                <Text h1>coming soon</Text>
-                <Spacer />
-                <Loading size='xl' type='spinner' color={'error'} />
-            </Container>
+        <Layout title='Pokémons - Favorites'>
+            {favoritePokemons.length === 0 ? (
+                <NoFavorites />
+            ) : (
+                <FavoritePokemons favoritePokemons={favoritePokemons} />
+            )}
         </Layout>
     );
 };
 
-export default index;
+export default FavoritesApp;
