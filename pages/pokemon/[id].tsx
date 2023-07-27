@@ -10,6 +10,8 @@ import { getPokemonInfo, localFavorites } from '../../utils';
 import confetti from 'canvas-confetti';
 import { ButtonsContainer } from '../../components/ui';
 
+const origin = typeof window === 'undefined' ? '' : window.location.origin;
+
 interface Props {
     pokemon: Pokemon;
 }
@@ -56,7 +58,8 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                             <Card.Image
                                 src={
                                     pokemon.sprites.other?.dream_world
-                                        .front_default || 'no-image'
+                                        .front_default ||
+                                    `${origin}/img/default-no-bg.png`
                                 }
                                 alt={`Pokémon - ${pokemon.id} - ${pokemon.name}`}
                                 width={'100%'}
@@ -99,25 +102,37 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                             <Text size={30}>Sprites:</Text>
                             <Container display='flex' direction='row' gap={0}>
                                 <Image
-                                    src={pokemon.sprites.front_default}
+                                    src={
+                                        pokemon.sprites.front_default ||
+                                        `${origin}/img/default-no-bg.png`
+                                    }
                                     alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={pokemon.sprites.back_default}
+                                    src={
+                                        pokemon.sprites.back_default ||
+                                        `${origin}/img/default-no-bg.png`
+                                    }
                                     alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={pokemon.sprites.back_shiny}
+                                    src={
+                                        pokemon.sprites.back_shiny ||
+                                        `${origin}/img/default-no-bg.png`
+                                    }
                                     alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={pokemon.sprites.front_shiny}
+                                    src={
+                                        pokemon.sprites.front_shiny ||
+                                        `${origin}/img/default-no-bg.png`
+                                    }
                                     alt={pokemon.name}
                                     width={100}
                                     height={100}
@@ -143,17 +158,29 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
             const id = pokemon.url.split('/').reverse()[1];
             return { params: { id } };
         }),
-        fallback: false
+        fallback: 'blocking'
     };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { id } = params as { id: string };
 
+    const pokemon = await getPokemonInfo({ nameOrId: id });
+
+    if (!pokemon) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        };
+    }
+
     return {
         props: {
-            pokemon: await getPokemonInfo({ nameOrId: id })
-        }
+            pokemon
+        },
+        revalidate: 86400
     };
 };
 
