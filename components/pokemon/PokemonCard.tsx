@@ -7,18 +7,18 @@ interface Props {
 }
 
 export const PokemonCard: FC<Props> = ({ pokemon }) => {
-    const { id, img, url, name } = pokemon;
+    const { id, img, name } = pokemon;
 
     const router = useRouter();
 
     const onClick = () => {
-        router.push(`/pokemon/${name}`);
+        router.push(`/name/${name}`);
     };
 
     return (
         <Grid xs={6} key={id} sm={3} md={2} xl={1}>
             <Card isHoverable isPressable onClick={onClick}>
-                <Card.Body css={{ p: '1' }}>
+                <Card.Body>
                     <Card.Image
                         src={img}
                         alt={`Pokémon - ${id} - ${name}`}
