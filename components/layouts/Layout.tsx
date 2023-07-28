@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { FC, ReactNode } from 'react';
-import { Navbar } from '../ui';
+import { NavbarUI } from '../ui';
 import { Container } from '@nextui-org/react';
 
 interface Props {
@@ -35,7 +35,7 @@ export const Layout: FC<Props> = ({ children, title }) => {
                     content={`${origin}/img/banner.png`}
                 />
             </Head>
-            <Navbar />
+            <NavbarUI />
             <Container>
                 <main
                     style={{

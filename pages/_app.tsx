@@ -2,6 +2,8 @@ import { AppProps } from 'next/app';
 import { NextUIProvider } from '@nextui-org/react';
 import { darkTheme } from '../theme';
 import NextNProgress from 'nextjs-progressbar';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
@@ -22,9 +24,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                     return <style>{defaultCSS + customCSS}</style>;
                 }}
             />
-            <NextUIProvider theme={darkTheme}>
-                <Component {...pageProps} />
-            </NextUIProvider>
+            <NextThemesProvider
+                defaultTheme='dark'
+                attribute='class'
+                value={{
+                    dark: darkTheme.className
+                }}>
+                <NextUIProvider theme={darkTheme}>
+                    <Component {...pageProps} />
+                </NextUIProvider>
+            </NextThemesProvider>
         </>
     );
 }
